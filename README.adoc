@@ -1,0 +1,44 @@
+= csoftz-polarbookstore-polar-ui
+
+Standalone repository for the _'polar-ui_'.
+Keeps the same code as Thomas Vitale Book Spring Cloud Native but in my own format.
+
+The book reference follows:
+https://www.manning.com/books/cloud-native-spring-in-action[Cloud Native Spring in Action^] book by https://www.thomasvitale.com[Thomas Vitale^].
+
+An Angular front end for the Polar Book Store. 
+
+
+When you checkout the source code for the book, the code for *_polar_ui_* is not presen, but searching I found
+that the author also created a *_gitHub organization* https://github.com/PolarBookshop[PolarBookShop] which 
+contains the source code for the *_Angular_* front end for the book.
+
+[NOTE]
+====
+As I am modifying the book endpoints as a way of adapting and learning, the image that the author has
+different endpoint paths, that's why I had to download the repo and make my own image for use in my 
+studies.
+
+The code is based on https://github.com/PolarBookshop/polar-ui[polar-ui^] repo.
+====
+
+Run the following command to build the project.
+
+[source,bash]
+----
+$ ./gradlew buildAngular
+----
+
+Then, package it in an NGINX container using the Pack CLI and the Paketo Buildpacks.
+
+[source,bash]
+----
+$ pack build polar-ui --buildpack gcr.io/paketo-buildpacks/nginx --builder paketobuildpacks/builder:base -p dist
+----
+
+Finally, you can run the container as follows.
+
+[source,bash]
+----
+$ docker run -d --name polar-ui --publish 9004:9004 -e PORT=9004 polar-ui
+----
